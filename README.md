@@ -108,6 +108,16 @@ message = request.send_msg(:to => 584141571411, :text => "I don't know", :deliv_
 stop = request.stop_msg(:apimsgid => message["ID"])
 ```
 
+## Use alternative credentials before sending
+Overrides the default configuration from `Clickatellsend.config` with the provided
+keyword arguments.
+```ruby
+request = Clickatellsend::Request.new(:user => ENV['CLICKATELL_US_USER'], 
+                                      :password => ENV['CLICKATELL_US_PASSWORD'],
+                                      :api_id => ENV['CLICKATELL_US_API_ID'])
+message = request.send_msg(:to => 584141571411, :text => "I don't know")
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

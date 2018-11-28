@@ -2,11 +2,15 @@ module Clickatellsend
 
 	class Request
 
-		def initialize()
-	    @url = Clickatellsend.config[:url]
-		  @user = Clickatellsend.config[:user]
-		  @password = Clickatellsend.config[:password]
-		  @api_id = Clickatellsend.config[:api_id]
+    # :url, :user, :password, :app_id (optional)
+		def initialize(opts = {})
+			config = Clickatellsend.config
+			config = config.merge(opts)
+
+			@url = config[:url]
+			@user = config[:user]
+			@password = config[:password]
+			@api_id = config[:api_id]
 	  end
 
 	  # :to, :text, :deliv_time
