@@ -63,7 +63,7 @@ module Clickatellsend
 
 	  	def response(request)
 	  		if request.status == 200
-	  			response = request.split("\n").map{|l| l.scan /(\w+):\s($|[\w, \d.]+)(?:\s|$)/}.map &:to_h
+	  			response = request.body.split("\n").map{|l| l.scan /(\w+):\s($|[\w, \d.]+)(?:\s|$)/}.map &:to_h
 	  			if response.size == 1
 	  				response[0]
 	  			end
