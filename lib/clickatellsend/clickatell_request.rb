@@ -15,40 +15,40 @@ module Clickatellsend
 
 	  # :to, :text, :deliv_time
 	  def send_msg(params)
-			response(RestClient.get "#{@url}http/sendmsg", {:params => options(params)})
+			response(Faraday.new(@url).get("http/sendmsg", options(params)))
 	  end
 
 	  def get_balance
-	  	response(RestClient.get "#{@url}http/getbalance", {:params => options({})})
+	  	response(Faraday.new(@url).get("http/getbalance", options({})))
 	  end
 
 	  # :apimsgid
 	  def get_msg_charge(params)
-	  	response(RestClient.get "#{@url}http/getmsgcharge", {:params => options(params)})
+	  	response(Faraday.new(@url).get("http/getmsgcharge", options(params)))
 	  end
 
 	  # :msisdn
 	  def route_coverage(params)
-	  	response(RestClient.get "#{@url}utils/routecoverage", {:params => options(params)})
+	  	response(Faraday.new(@url).get("utils/routecoverage", options(params)))
 	  end
 
 	  # :apimsgid
 	  def get_msg_status(params)
-	  	response(RestClient.get "#{@url}http/querymsg", {:params => options(params)})
+	  	response(Faraday.new(@url).get("http/querymsg", options(params)))
 	  end
 
 	  # :apimsgid
 	  def stop_msg(params)
-	  	response(RestClient.get "#{@url}http/delmsg", {:params => options(params)})
+	  	response(Faraday.new(@url).get("http/delmsg", options(params)))
 	  end
 
 	  def auth
-	  	response(RestClient.get "#{@url}http/auth", {:params => options({})})
+	  	response(Faraday.new(@url).get("http/auth", options({})))
 	  end
 
 	  # :session_id
 	  def prevent_expiring(params)
-	  	response(RestClient.get "#{@url}http/ping", {:params => params})
+			response(Faraday.new(@url).get("http/ping", options(params)))
 	  end
 
 	  private
@@ -62,7 +62,7 @@ module Clickatellsend
 	  	end
 
 	  	def response(request)
-	  		if request.code == 200
+	  		if request.status == 200
 	  			response = request.split("\n").map{|l| l.scan /(\w+):\s($|[\w, \d.]+)(?:\s|$)/}.map &:to_h
 	  			if response.size == 1
 	  				response[0]
