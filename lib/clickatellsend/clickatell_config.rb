@@ -11,11 +11,12 @@ module Clickatellsend
 
   class Configuration
     attr_accessor :url, :user, :password, :api_id
+
     def config
-      {:url => @url,
-       :user => @user,
-       :password => @password,
-       :api_id => @api_id}
+      { :url      => @url,
+        :user     => @user,
+        :password => @password,
+        :api_id   => @api_id }
     end
   end
 
