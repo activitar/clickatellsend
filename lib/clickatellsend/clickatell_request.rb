@@ -1,3 +1,7 @@
+require 'faraday'
+
+Faraday.default_adapter = :net_http
+
 module Clickatellsend
 
   class Request
@@ -71,6 +75,8 @@ module Clickatellsend
         { :ERR => "Could not connect to the API, double check your settings and internet connection" }
       end
     end
+
+    RESPONSE_PATTERN = /(\w+):\s($|[\w,. \d]+)(?:\s|$)/
 
   end
 

@@ -1,5 +1,4 @@
 module Clickatellsend
-
   def self.config(&block)
     @configuration ||= Configuration.new
     unless block.nil?
@@ -12,6 +11,13 @@ module Clickatellsend
   class Configuration
     attr_accessor :url, :user, :password, :api_id
 
+    def initialize
+      @url = nil
+      @user = nil
+      @password = nil
+      @api_id = nil
+    end
+
     def config
       { :url      => @url,
         :user     => @user,
@@ -19,5 +25,4 @@ module Clickatellsend
         :api_id   => @api_id }
     end
   end
-
 end

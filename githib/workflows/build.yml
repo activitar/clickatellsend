@@ -1,0 +1,37 @@
+name: Ruby Gem
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: '*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.7', '3.0', '3.1', '3.2']
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake test
+      - name: Build gem
+        run: gem build *.gemspec
+      - name: Archive gem
+        uses: actions/upload-artifact@v3
+        with:
+          name: gem
+          path: '*.gem'
